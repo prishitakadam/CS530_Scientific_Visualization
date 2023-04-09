@@ -17,7 +17,6 @@ class Temperature(QMainWindow):
         self.volume = self.get_volume()
         self.iren = self.render()
 
-
     def get_vtk_image(self, data):
         vtk_image = vtk.vtkImageImport()
         vtk_image.CopyImportVoidPointer(data, len(data))
@@ -30,7 +29,7 @@ class Temperature(QMainWindow):
     def get_color_map(self):
         color_map_values = [[5, 128, 255, 0],
                             [6, 255, 255, 51],
-                            [8, 255, 153, 51],
+                            [6.5, 255, 153, 51],
                             [7, 255, 0, 0]]
         color_map = vtk.vtkColorTransferFunction()
         color_map.SetColorSpaceToRGB()
@@ -41,8 +40,10 @@ class Temperature(QMainWindow):
     
     def get_transfer_function(self):
         opacity = [[0, 0.0],
-                    [6.5, 0.08],
-                    [6.4, 0.0],
+                    [6.5, 0.05],
+                    [5.8, 0.0],
+                    [6.6, 0.06],
+                    [6.51, 0.0],
                     [7.2, 0.1],
                     [7.0, 0.0]]
         

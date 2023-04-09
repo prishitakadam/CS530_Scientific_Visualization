@@ -27,10 +27,13 @@ class Temperature(QMainWindow):
         return vtk_image
     
     def get_color_map(self):
-        color_map_values = [[5, 128, 255, 0],
-                            [6, 255, 255, 51],
-                            [6.5, 255, 153, 51],
-                            [7, 255, 0, 0]]
+        color_map_values = [[6,21, 250, 246],
+                            [6.5,8, 98, 247],
+                            [6.8,192, 18, 247],
+                            [7,247, 18, 35],
+                            [7.1,247, 136, 18],
+                            [7.3, 247, 188, 18],
+                            [7.4, 247, 237, 18]]
         color_map = vtk.vtkColorTransferFunction()
         color_map.SetColorSpaceToRGB()
         for i in range(len(color_map_values)):
@@ -39,13 +42,20 @@ class Temperature(QMainWindow):
         return color_map
     
     def get_transfer_function(self):
-        opacity = [[0, 0.0],
-                    [6.5, 0.05],
-                    [5.8, 0.0],
-                    [6.6, 0.06],
-                    [6.51, 0.0],
-                    [7.2, 0.1],
-                    [7.0, 0.0]]
+        opacity = [ [0.0, 0.0],
+                    [6.0, 0.0],
+                    [6.1, 0.05],
+                    [6.3, 0.0],
+                    [6.4, 0.0],
+                    [6.5, 0.08], 
+                    [6.7, 0.0],
+                    [6.8, 0.2],
+                    [7.0, 0.0],
+                    [7.1, 0.3],
+                    [7.2, 0.0],
+                    [7.3, 0.4],
+                    [7.35, 0.0],
+                    [7.4, 0.5]]
         
         transfer_function = vtk.vtkPiecewiseFunction()
         for i in range(len(opacity)):

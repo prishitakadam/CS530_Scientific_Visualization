@@ -13,9 +13,9 @@ import h5py
 # import pandas as pd
 
 # Load Class
-from Temperature import Temperature
-from Density import Density
-from Dark_Matter_Density import Dark_Matter_Density
+from utils.Temperature import Temperature
+from utils.Density import Density
+from utils.Dark_Matter_Density import Dark_Matter_Density
 
 def get_data(filename, vrtype):
     with h5py.File(filename, 'r') as f:

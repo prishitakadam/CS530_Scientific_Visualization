@@ -1,16 +1,16 @@
 from PyQt6.QtWidgets import QMainWindow
-from Setup_UI import Ui_MainWindow
+from utils.Setup_UI import Ui_MainWindow
 import vtk
 import numpy as np
 import pandas as pd
 import pdb
 
-class Temperature(QMainWindow):
+class Density(QMainWindow):
     def __init__(self, data, parent = None):
         QMainWindow.__init__(self, parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        data = np.log10(np.array(data))*1
+        data = np.log10(np.array(data)+1)*1
         self.vtk_image = self.get_vtk_image(data.tostring())
         self.color_map = self.get_color_map()
         self.transfer_function = self.get_transfer_function()
@@ -31,14 +31,8 @@ class Temperature(QMainWindow):
         return vtk_image
     
     def get_color_map(self):
-        color_map_values = [[6,21, 250, 246],
-                            [6.5,8, 98, 247],
-                            [6.8,192, 18, 247],
-                            [7,247, 18, 35],
-                            [7.1,247, 136, 18],
-                            [7.3, 247, 188, 18],
-                            [7.4, 247, 237, 18],
-                            [7.6, 247, 237, 18]]
+        color_map_values = [[0,211, 84, 0],
+                            [4.5,240,230,140]]
         color_map = vtk.vtkColorTransferFunction()
         color_map.SetColorSpaceToRGB()
         for i in range(len(color_map_values)):
@@ -48,19 +42,19 @@ class Temperature(QMainWindow):
     
     def get_transfer_function(self):
         opacity = [ [0.0, 0.0],
-                    [6.0, 0.0],
-                    [6.1, 0.05],
-                    [6.3, 0.0],
-                    [6.4, 0.0],
-                    [6.5, 0.1], 
-                    [6.7, 0.0],
-                    [6.8, 0.3],
-                    [7.0, 0.0],
-                    [7.1, 0.7],
-                    [7.2, 0.0],
-                    [7.3, 0.8],
-                    [7.35, 0.0],
-                    [7.4, 1.0]]
+                    [0.7, 0.0],
+                    [0.8, 0.05],
+                    [1.9, 0.0],
+                    [2.0, 0.2],
+                    [2.2, 0.0],
+                    [2.5, 0.3],
+                    [2.8, 0.0],
+                    [3.0, 0.5],
+                    [3.3, 0.0],
+                    [3.4, 0.7],
+                    [3.7, 0.0],
+                    [3.8, 0.9],
+                    [4.2, 0.0]]
         
         transfer_function = vtk.vtkPiecewiseFunction()
         for i in range(len(opacity)):
@@ -93,7 +87,7 @@ class Temperature(QMainWindow):
         scalar_bar.SetPosition(0.9, 0.2)
         scalar_bar.SetWidth(0.05)
         scalar_bar.SetHeight(0.6)
-        scalar_bar.SetTitle("Temperature (log scale)")
+        scalar_bar.SetTitle("Density (log scale)")
         self.ren.AddActor(scalar_bar)
 
         scalar_bar_widget = vtk.vtkScalarBarWidget()
@@ -124,7 +118,7 @@ class Temperature(QMainWindow):
         self.iren.AddObserver("KeyPressEvent", self.key_pressed_callback)
     
     def screenshot(self):
-        file_name = "Temperature_VR_" + str(self.frame_counter).zfill(1) + ".png"
+        file_name = "Density_VR_" + str(self.frame_counter).zfill(1) + ".png"
         window = self.ui.vtkWidget.GetRenderWindow()
         image = vtk.vtkWindowToImageFilter()
         image.SetInput(window)
@@ -153,5 +147,3 @@ class Temperature(QMainWindow):
         
         elif key == 'q':
             sys.exit()
-        
-        

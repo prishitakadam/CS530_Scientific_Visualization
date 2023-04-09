@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QMainWindow
-from Setup_UI import Ui_MainWindow
+from utils.Setup_UI import Ui_MainWindow
 
 class Dark_Matter_Density(QMainWindow):
     def __init__(self, data, parent = None):

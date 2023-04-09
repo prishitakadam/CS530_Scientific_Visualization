@@ -4,7 +4,7 @@ from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName('The Main Window')
-        MainWindow.setWindowTitle('DVR Head')
+        MainWindow.setWindowTitle('Volume Rendering')
         
         # Widgets
         self.centralWidget = QWidget(MainWindow)

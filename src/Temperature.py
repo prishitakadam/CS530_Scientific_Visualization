@@ -56,11 +56,11 @@ class Temperature(QMainWindow):
                     [6.7, 0.0],
                     [6.8, 0.3],
                     [7.0, 0.0],
-                    [7.1, 0.5],
+                    [7.1, 0.7],
                     [7.2, 0.0],
-                    [7.3, 0.9],
+                    [7.3, 0.8],
                     [7.35, 0.0],
-                    [7.4, 0.9]]
+                    [7.4, 1.0]]
         
         transfer_function = vtk.vtkPiecewiseFunction()
         for i in range(len(opacity)):

@@ -1,13 +1,13 @@
 from PyQt6.QtWidgets import QMainWindow
 from utils.Setup_UI import Ui_MainWindow
-from utils.Utils import Utils as utils
+from utils.vr.Utils import Utils as utils
 # import vtk
 import numpy as np
 import pandas as pd
 import json
 import pdb
 
-class Dark_Matter_Density(QMainWindow):
+class Temperature(QMainWindow):
     def __init__(self, data, parent = None):
         QMainWindow.__init__(self, parent)
         self.ui = Ui_MainWindow()
@@ -18,7 +18,7 @@ class Dark_Matter_Density(QMainWindow):
         # self.set_cam_state()
     
     def get_transfer_function_values(self):
-        with open('./transfer_function/vr_dark_matter_density.json', 'r') as f:
+        with open('./transfer_function/vr_temperature.json', 'r') as f:
             json_file = f.read()
             data = json.loads(json_file)
         return data['color'], data['opacity']
@@ -30,5 +30,7 @@ class Dark_Matter_Density(QMainWindow):
         self.transfer_function = utils.get_transfer_function(self.opacity)
         self.volume = utils.get_volume(self.vtk_image, self.color_map, self.transfer_function)
         self.ren, self.iren = utils.render(self.volume, self.ui)
-        self.scalar_bar = utils.set_scalar_bar(self.color_map, self.ren, self.iren, 'Dark Matter Density')
+        self.scalar_bar = utils.set_scalar_bar(self.color_map, self.ren, self.iren, 'Temperature')
         self.ren.AddActor(self.scalar_bar)
+
+    

@@ -13,6 +13,7 @@ class Dark_Matter_Density(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.data = np.log10(np.array(data))*1
+        # pdb.set_trace()
         self.make()
         self.frame_counter = 0
         # self.set_cam_state()

@@ -13,6 +13,7 @@ class Temperature(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.data = np.log10(np.array(data))*1
+        # pdb.set_trace()
         self.make()
         self.frame_counter = 0
         # self.set_cam_state()
@@ -33,4 +34,6 @@ class Temperature(QMainWindow):
         self.scalar_bar = utils.set_scalar_bar(self.color_map, self.ren, self.iren, 'Temperature')
         self.ren.AddActor(self.scalar_bar)
 
+    def getActors(self):
+        return self.volume, self.scalar_bar
     

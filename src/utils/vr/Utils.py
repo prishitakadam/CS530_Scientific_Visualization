@@ -70,6 +70,52 @@ class Utils:
         iren = ui.vtkWidget.GetRenderWindow().GetInteractor()
         return ren, iren
     
+    def get_clip(reader, volume):
+        # Plane X, Y, Z
+        x_plane = vtk.vtkPlane()
+        x_plane.SetOrigin(0, 0, 0)
+        x_plane.SetNormal(1.0, 0, 0)
+        x_clip = vtk.vtkClipPolyData()
+        x_clip.SetInputConnection(volume.GetOutputPort())
+        x_clip.SetClipFunction(x_plane)
+
+        y_plane = vtk.vtkPlane()
+        y_plane.SetOrigin(0, 0, 0)
+        y_plane.SetNormal(0, 1.0, 0)
+        y_clip = vtk.vtkClipPolyData()
+        y_clip.SetInputConnection(x_clip.GetOutputPort())
+        y_clip.SetClipFunction(y_plane)
+
+        z_plane = vtk.vtkPlane()
+        z_plane.SetOrigin(0, 0, 0)
+        z_plane.SetNormal(0, 0, 1.0)
+        z_clip = vtk.vtkClipPolyData()
+        z_clip.SetInputConnection(y_clip.GetOutputPort())
+        z_clip.SetClipFunction(z_plane)
+
+        probe_filter = vtk.vtkProbeFilter()
+        probe_filter.SetSourceConnection(reader.GetOutputPort())
+        probe_filter.SetInputConnection(z_clip.GetOutputPort())
+
+        min_clip = vtk.vtkClipPolyData()
+        min_clip.SetInputConnection(probe_filter.GetOutputPort())
+        min_clip.InsideOutOff()
+        min_clip.SetValue(grad_min)
+
+        max_clip = vtk.vtkClipPolyData()
+        max_clip.SetInputConnection(min_clip.GetOutputPort())
+        max_clip.InsideOutOn()
+        max_clip.SetValue(grad_max)
+
+        imapper = vtk.vtkDataSetMapper()
+        imapper.SetInputConnection(max_clip.GetOutputPort())
+        imapper.SetLookupTable(color_map)
+
+        iactor = vtk.vtkActor()
+        iactor.SetMapper(imapper)
+    
+        return iactor
+    
     def set_cam_state():
         cam_state = [[-268.75307985095617, -255.37179336859447, -247.5624198576113],
             [0.0, 0.0, 0.0],

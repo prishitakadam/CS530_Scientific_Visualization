@@ -14,6 +14,7 @@ class Density(QMainWindow):
         self.ui.setupUi(self)
         self.data = np.log10(np.array(data))*1
         self.make()
+        # pdb.set_trace()
         self.frame_counter = 0
         # self.set_cam_state()
     
